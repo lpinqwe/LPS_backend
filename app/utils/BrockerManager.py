@@ -1,3 +1,4 @@
+import os
 import threading
 
 import pika
@@ -20,13 +21,36 @@ class BrockerM:
             return [e,"broker"]
 
     def __init__(self, FactoryObj):
-        print("!###############!!"+SettingsTMP.RABBITMQ_HOST)
-        self.factory = FactoryObj
-        # Устанавливаем соединение с RabbitMQ
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=SettingsTMP.RABBITMQ_HOST))
-        self.channel = self.connection.channel()
-        self.channel.queue_declare(queue=SettingsTMP.RABBITMQ_QUEUE_post)
-        self.channel.queue_declare(queue=SettingsTMP.RABBITMQ_QUEUE_get)
+        self.factory=FactoryObj
+        try:
+            # Получение конфигурации из переменных окружения
+            rabbitmq_host = os.getenv('RABBITMQ_HOST', '192.168.56.1')
+            rabbitmq_port = int(os.getenv('RABBITMQ_PORT', 5672))
+            rabbitmq_user = os.getenv('RABBITMQ_USER', 'guest')
+            rabbitmq_password = os.getenv('RABBITMQ_PASSWORD', 'guest')
+
+            print(f"Connecting to RabbitMQ at {rabbitmq_host}:{rabbitmq_port} with user {rabbitmq_user}")
+
+            # Настройка соединения
+            credentials = pika.PlainCredentials(rabbitmq_user, rabbitmq_password)
+            connection_params = pika.ConnectionParameters(
+                host=rabbitmq_host,
+                port=rabbitmq_port,
+                credentials=credentials
+            )
+
+            # Устанавливаем соединение с RabbitMQ
+            self.connection = pika.BlockingConnection(connection_params)
+            self.channel = self.connection.channel()
+
+            # Объявление очередей
+            self.channel.queue_declare(queue=SettingsTMP.RABBITMQ_QUEUE_post)
+            self.channel.queue_declare(queue=SettingsTMP.RABBITMQ_QUEUE_get)
+            print("RabbitMQ connection established successfully.")
+
+        except Exception as e:
+            print(f"Failed to connect to RabbitMQ: {e}")
+            raise
 
     def send_message(self, message):
         self.channel.basic_publish(exchange='', routing_key=SettingsTMP.RABBITMQ_QUEUE_post, body=message)
