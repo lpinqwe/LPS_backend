@@ -8,6 +8,7 @@ from app.Commands.newChat import newChat
 from app.Commands.newMessage import newMessage
 from app.Commands.offline import offline
 from app.Commands.online import online
+from app.Commands.singUpLogIn import SignUpLogIn
 from app.Commands.updateUserData import updateUserData
 
 
@@ -21,7 +22,7 @@ class Factory:
             'updateUserData': updateUserData,
             'newMessage': newMessage,
             'getListOfChats': getListOfChats,
-            'deleteMessage': MoveCommand,
+            'SignUpLogIn': SignUpLogIn,
             'readMessage': MoveCommand,
             'offline': offline,
             'online': online,

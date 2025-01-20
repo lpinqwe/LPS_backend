@@ -24,7 +24,8 @@ class BrockerM:
         self.factory=FactoryObj
         try:
             # Получение конфигурации из переменных окружения
-            rabbitmq_host = os.getenv('RABBITMQ_HOST', '192.168.56.1')
+            rabbitmq_host = os.getenv('RABBITMQ_HOST', '127.0.0.1')
+            #rabbitmq_host = "192.168.213.28"
             rabbitmq_port = int(os.getenv('RABBITMQ_PORT', 5672))
             rabbitmq_user = os.getenv('RABBITMQ_USER', 'guest')
             rabbitmq_password = os.getenv('RABBITMQ_PASSWORD', 'guest')
