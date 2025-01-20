@@ -16,6 +16,6 @@ class MoveCommand(Command):
         pur = command_entity['purpose']
         user = command_entity['username']
         payload = self.body_json
-        feed = Feedback(payload=payload, username=user, purpose=pur)
-        print(f"RECIEVE TO COMMAND {self.body_json}")
+        feed = Feedback(payload="MoveCommand", username=user, purpose=pur)
+        print(f"RECIEVE TO MoveCommand {self.body_json}")
         return feed
