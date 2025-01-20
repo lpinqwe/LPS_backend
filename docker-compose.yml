@@ -27,7 +27,7 @@ services:
       ###
 
   flask-app:
-    image: flask-app-v3:latest
+    image: backend_lps_v_alpha
     ports:
       - "5000:5000"
     #environment:
