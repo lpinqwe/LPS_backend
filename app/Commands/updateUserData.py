@@ -28,18 +28,18 @@ class updateUserData(Command):
             command_entity = json.loads(self.body_json)
             pur = command_entity['purpose']
             username = command_entity['username']
-            nickname = command_entity['nickname']
-            phoneNumber = command_entity['phoneNumber']
-            email = command_entity['email']
-            lastOnline = command_entity['lastOnline']
+            nickname = command_entity['nickname']#
+            phoneNumber = command_entity['phoneNumber']#
+            #email = command_entity['email']
+            #lastOnline = command_entity['lastOnline']
             dateOfBirth = command_entity['dateOfBirth']
 
             sql = """
             UPDATE public.userinfo
-            SET nickname=%s, phoneNumber=%s, useremail=%s, lastOnline=%s, birthdate=%s
+            SET nickname=%s, phoneNumber=%s, birthdate=%s
             WHERE userID=%s;
             """
-            params = [nickname, phoneNumber, email, lastOnline, dateOfBirth, username]
+            params = [nickname, phoneNumber,  dateOfBirth, username]
             for i in range(len(params)):
                 if params[i] == '':
                     params[i] = None
@@ -53,13 +53,10 @@ class updateUserData(Command):
 
             data = {
                 "purpose": pur,
-                "consumers":f"[{username}]",
                 "username": username,
                 "nickname": nickname,
-                "Fconsumers": list(tmp[0]),
+                "consumers": [row[0] for row in tmp],
                 "phoneNumber": phoneNumber,
-                "email": email,
-                "lastOnline": lastOnline,  # Convert back to ISO format for JSON
                 "dateOfBirth": dateOfBirth
             }
 
