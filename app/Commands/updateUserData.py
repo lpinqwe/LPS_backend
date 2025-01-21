@@ -55,7 +55,7 @@ class updateUserData(Command):
                 "purpose": pur,
                 "username": username,
                 "nickname": nickname,
-                "consumers": list(tmp[0]),
+                "Fconsumers": list(tmp[0]),
                 "phoneNumber": phoneNumber,
                 "email": email,
                 "lastOnline": lastOnline,  # Convert back to ISO format for JSON

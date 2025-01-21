@@ -2,9 +2,13 @@ import json
 
 
 class Feedback:
-    def __init__(self, purpose="info", username="sysMsg", payload="testMsg"):
+    def __init__(self, purpose="info", username="sysMsg", payload="testMsg", consum=''):
+
         self.purpose = purpose
         self.username = username
+        if(consum==''):
+            consum=username
+        self.consum=consum
         if(payload == None):
             payload=""
         self.payload = payload
@@ -13,7 +17,8 @@ class Feedback:
         return {
             "purpose": self.purpose,
             "username": self.username,
-            "payload": self.payload
+            "payload": self.payload,
+            "consumers":self.consum
         }
 
     def __str__(self):
