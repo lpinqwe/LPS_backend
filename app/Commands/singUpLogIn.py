@@ -20,6 +20,6 @@ class SignUpLogIn(Command):
             user = command_entity['username']
             sql = f"Insert into public.userinfo (userID) values ('{user}');"
             resp = self.connection.read_data(sql)
-            return Feedback(payload=resp, purpose=pur, username=user)
+            return Feedback(payload='', purpose=pur, username=user)
         except Exception as e:
             print(e)

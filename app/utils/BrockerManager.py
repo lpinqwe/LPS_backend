@@ -79,6 +79,8 @@ class BrockerM:
         tmp = self.factory.execute_command(tmp)
 
         if tmp:
+            print("EXAMPLE")
+            print(str(tmp))
             self.send_message(str(tmp))
 
     def __del__(self):
