@@ -25,7 +25,7 @@ class getUserData(Command):
                     tmp[i]=""
             customfeedback = "{" + f'''
                     "purpose":"{pur}",
-                    "consumer":f"[{user}]",
+                    "consumer":["{user}"],
                     "userid": "{tmp[0]}",
                     "username": "{tmp[1]}",
                     "nickname": "{tmp[2]}",
