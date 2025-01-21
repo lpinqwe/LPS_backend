@@ -56,10 +56,10 @@ class newMessage(Command):
             tmp=self.connection.read_data(sql,params)
             print(tmp)
 
-            data = "{"+f'''
+            data = {
                 "purpose": {pur},
                 "consumers": {list(tmp[0])},  
-                "messageId": {messageId}",
+                "messageId": {messageId},
                 "chatId": {chatId},
                 "text": {text},
                 "username":{user},
@@ -67,7 +67,7 @@ class newMessage(Command):
                 "isDeleted": {isDeleted},  
                 "isRead": {isRead}, 
                 "sendTime": {sendTime}
-                '''+"}"
-            return data
+                }
+            return json.dumps(data)
         except Exception as e:
             print(e)

@@ -53,6 +53,7 @@ class updateUserData(Command):
 
             data = {
                 "purpose": pur,
+                "consumers":f"[{username}]",
                 "username": username,
                 "nickname": nickname,
                 "Fconsumers": list(tmp[0]),
@@ -62,7 +63,7 @@ class updateUserData(Command):
                 "dateOfBirth": dateOfBirth
             }
 
-            return data
+            return json.dumps(data)
 
         except Exception as e:
             print(e)

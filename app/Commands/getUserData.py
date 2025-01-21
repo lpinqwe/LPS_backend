@@ -18,11 +18,14 @@ class getUserData(Command):
             sql = f'select userid,username,nickname,phonenumber,userkey,useremail,isdeleted,birthdate from userinfo ' \
                   f'where userid = \'{user}\';'
 
-            tmp = self.connection.read_data(sql)[0]
+            tmp = list(self.connection.read_data(sql)[0])
             print(tmp)
+            for i in range((len(tmp))):
+                if tmp[i]==None:
+                    tmp[i]=""
             customfeedback = "{" + f'''
                     "purpose":"{pur}",
-                    "consumer":"{user}",
+                    "consumer":f"[{user}]",
                     "userid": "{tmp[0]}",
                     "username": "{tmp[1]}",
                     "nickname": "{tmp[2]}",
@@ -34,6 +37,7 @@ class getUserData(Command):
             ''' + "}"
 
             print(customfeedback)
+            #return json.dumps(customfeedback)
             return customfeedback
         except Exception as e:
             print(e)

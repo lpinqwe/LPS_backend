@@ -27,7 +27,7 @@ class newChat(Command):
             if not isinstance(consumers, list):
                 return Feedback(payload="sth gone bad (str_list должен быть списком строк)", purpose=pur, username=user)
 
-            chatInfo = f'insert into public.chatinfo (chatID , chatName) values ({chatId},\'{chatName}\');'
+            chatInfo = f'insert into public.chatinfo (chatID , chatName) values (\'{chatId}\',\'{chatName}\');'
             try:
 
                 self.connection.read_data(chatInfo)

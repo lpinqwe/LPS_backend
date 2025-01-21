@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from app.interfaces.command import Command
 from app.utils.DBReader import DBReader
@@ -60,8 +61,16 @@ class getChatData(Command):
                      "isAnswer": msg[8], "sendtime": msg[7], "fromuid": msg[4]} for msg in
                     messages]
             }
+            json_data = json.dumps(data, default=self.custom_serializer, ensure_ascii=False, indent=4)
 
-            return data
+            return json_data
 
         except Exception as e:
             print(e)
+
+    def custom_serializer(self,obj):
+        if isinstance(obj, datetime):
+            return obj.isoformat()  # Преобразуем datetime в строку формата ISO 8601
+        if obj is None:
+            return ""  # Заменяем None на пустую строку
+        raise TypeError(f"Type {type(obj)} not serializable")

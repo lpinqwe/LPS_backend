@@ -29,12 +29,14 @@ class getListOfChats(Command):
             params = [username]
             chats = self.connection.read_data(sql, params)
 
-            data = {
+            customFeedback = {
+                "username": username,
+                "consumers": f"[{username}]",
                 "purpose": pur,
-                "chats": [chat[0] for chat in chats]  # Получение только ID чатов
+                "chats": [f"{chat[0]}" for chat in chats]  # Получение только ID чатов
             }
 
-            return data
+            return json.dumps(customFeedback)
 
         except Exception as e:
             print(e)
