@@ -63,7 +63,7 @@ class newMessage(Command):
                 "messageId": messageId,
                 "chatId": chatId,
                 "text": text,
-                "username":user,
+                "sender":user,
                 "isAnswer":IsAnswer,
                 "isDeleted": isDeleted,
                 "isRead": isRead,
