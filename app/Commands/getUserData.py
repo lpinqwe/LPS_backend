@@ -14,9 +14,9 @@ class getUserData(Command):
             command_entity = json.loads(self.body_json)
             pur = command_entity['purpose']
             user = command_entity['username']
-
+            userToGet = command_entity['userToGet']
             sql = f'select userid,username,nickname,phonenumber,userkey,useremail,isdeleted,birthdate from userinfo ' \
-                  f'where userid = \'{user}\';'
+                  f'where userid = \'{userToGet}\';'
 
             tmp = list(self.connection.read_data(sql)[0])
             print(tmp)
@@ -25,9 +25,8 @@ class getUserData(Command):
                     tmp[i]=""
             customfeedback = "{" + f'''
                     "purpose":"{pur}",
-                    "consumer":["{user}"],
-                    "userid": "{tmp[0]}",
-                    "username": "{tmp[1]}",
+                    "consumers":["{user}"],
+                    "username": "{tmp[0]}",
                     "nickname": "{tmp[2]}",
                     "phonenumber": "{tmp[3]}",
                     "userkey": "{tmp[4]}",
