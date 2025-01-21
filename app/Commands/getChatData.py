@@ -53,10 +53,10 @@ class getChatData(Command):
             data = {
                 "purpose": pur,
                 "chatId": chatId,
-                "consumers": [row[0] for row in users],
+                "consumers": username,
                 "chatName": chat_settings[0][1],
                 "chatSettings": chat_settings[0][3],
-                "users": list(users[0]),
+                "users": [row[0] for row in users],
                 "messages": [
                     {"msgid": msg[0], "text": msg[1], "typemsg": msg[2], "load": msg[3], "isdeleted": msg[5], "isRead": msg[6],
                      "isAnswer": msg[8], "sendtime": msg[7], "fromuid": msg[4]} for msg in
