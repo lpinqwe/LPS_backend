@@ -54,19 +54,20 @@ class newMessage(Command):
             """
             params=[chatId]
             tmp=self.connection.read_data(sql,params)
-            print(tmp)
-
+            #print(tmp)
+            print("TMP->")
+            print([row[0] for row in tmp])
             data = {
-                "purpose": {pur},
-                "consumers": {list(tmp[0])},  
-                "messageId": {messageId},
-                "chatId": {chatId},
-                "text": {text},
-                "username":{user},
-                "isAnswer": {IsAnswer},
-                "isDeleted": {isDeleted},  
-                "isRead": {isRead}, 
-                "sendTime": {sendTime}
+                "purpose": pur,
+                "consumers": [row[0] for row in tmp],
+                "messageId": messageId,
+                "chatId": chatId,
+                "text": text,
+                "username":user,
+                "isAnswer":IsAnswer,
+                "isDeleted": isDeleted,
+                "isRead": isRead,
+                "sendTime":sendTime
                 }
             return json.dumps(data)
         except Exception as e:
