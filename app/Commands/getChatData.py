@@ -50,7 +50,7 @@ class getChatData(Command):
             """
             chat_settings = self.connection.read_data(sql_chat_settings, [chatId])
 
-            data = {
+            self.messages_ = {
                 "purpose": pur,
                 "chatId": chatId,
                 "consumers": username,
@@ -58,10 +58,12 @@ class getChatData(Command):
                 "chatSettings": chat_settings[0][3],
                 "users": [row[0] for row in users],
                 "messages": [
-                    {"msgid": msg[0], "text": msg[1], "typemsg": msg[2], "load": msg[3], "isdeleted": msg[5], "isRead": msg[6],
-                     "isAnswer": msg[8], "sendtime": msg[7], "fromuid": msg[4]} for msg in
+                    {"msgid": msg[0], "text": msg[1], "typemsg": msg[2], "load": msg[3], "isdeleted": msg[5],
+                     "isRead": msg[6],
+                     "isAnswer": msg[8], "sendtime": msg[7], "sender": msg[4]} for msg in
                     messages]
             }
+            data = self.messages_
             json_data = json.dumps(data, default=self.custom_serializer, ensure_ascii=False, indent=4)
 
             return json_data
