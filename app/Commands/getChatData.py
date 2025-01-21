@@ -53,6 +53,7 @@ class getChatData(Command):
             data = {
                 "purpose": pur,
                 "chatId": chatId,
+                "consumers": [row[0] for row in users],
                 "chatName": chat_settings[0][1],
                 "chatSettings": chat_settings[0][3],
                 "users": list(users[0]),
