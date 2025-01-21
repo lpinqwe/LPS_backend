@@ -1,7 +1,12 @@
+import json
+
+
 class Feedback:
     def __init__(self, purpose="info", username="sysMsg", payload="testMsg"):
         self.purpose = purpose
         self.username = username
+        if(payload == None):
+            payload=""
         self.payload = payload
 
     def get_data(self):
@@ -12,4 +17,4 @@ class Feedback:
         }
 
     def __str__(self):
-        return str(self.get_data())
+        return json.dumps(self.get_data())
