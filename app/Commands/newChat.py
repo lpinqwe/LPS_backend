@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from app.interfaces.command import Command
 from app.interfaces.feedback import Feedback
@@ -10,6 +11,13 @@ class newChat(Command):
     def __init__(self, body_json):
         self.body_json = body_json
         self.connection = DBReader()
+
+    def custom_serializer(self, obj):
+        if isinstance(obj, datetime):
+            return obj.isoformat()  # Преобразуем datetime в строку формата ISO 8601
+        if obj is None:
+            return ""  # Заменяем None на пустую строку
+        raise TypeError(f"Type {type(obj)} not serializable")
 
     def execute(self):
         try:
@@ -31,14 +39,14 @@ class newChat(Command):
             try:
 
                 self.connection.read_data(chatInfo)
-            except Exception as e:
-                print(e)
-            try:
+
+                print("here2")
 
                 [self.connection.read_data(
-                    f'insert into public.chatandusers (chatID,userID) values (%s,%s);', params=(chatId, cons))
+                    'insert into public.chatandusers (chatID,userID) values (%s,%s);', params=(chatId, cons))
                     for cons
                     in consumers]
+                print("here1")
 
             except Exception as e:
                 print(e)
@@ -49,8 +57,14 @@ class newChat(Command):
             consumers:список людей из чата
             """
 
-            customFeedback = f'{"purpose":"newChat","chatID":"{chatId}","chatName":"{chatName}","consumers":"{consumers}"}'
+            customFeedback = {"purpose": "newChat",
+                              "chatID": chatId,
+                              "chatName": chatName,
+                              "consumers": consumers
+                              }
+            json_data = json.dumps(customFeedback, default=self.custom_serializer, ensure_ascii=False, indent=4)
 
-            return customFeedback
+            return json_data
         except Exception as e:
+            print("here3")
             print(e)
