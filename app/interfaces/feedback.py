@@ -7,7 +7,7 @@ class Feedback:
         self.purpose = purpose
         self.username = username
         if(consum==''):
-            consum=f"[{username}]"
+            consum=[username]
         self.consum=consum
         if(payload == None):
             payload=""

@@ -31,7 +31,7 @@ class getListOfChats(Command):
 
             customFeedback = {
                 "username": username,
-                "consumers": f"[{username}]",
+                "consumers": [username],
                 "purpose": pur,
                 "chats": [f"{chat[0]}" for chat in chats]  # Получение только ID чатов
             }
