@@ -53,7 +53,7 @@ class getChatData(Command):
             self.messages_ = {
                 "purpose": pur,
                 "chatId": chatId,
-                "consumers": f"[{username}]",
+                "consumers": [username],
                 "chatName": chat_settings[0][1],
                 "chatSettings": chat_settings[0][3],
                 "users": [row[0] for row in users],
