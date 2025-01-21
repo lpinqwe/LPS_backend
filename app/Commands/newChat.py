@@ -58,7 +58,7 @@ class newChat(Command):
             """
 
             customFeedback = {"purpose": "newChat",
-                              "chatID": chatId,
+                              "chatId": chatId,
                               "chatName": chatName,
                               "consumers": consumers
                               }
