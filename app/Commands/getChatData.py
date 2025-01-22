@@ -47,8 +47,8 @@ class getChatData(Command):
                 "chatSettings": chat_settings[0][3],
                 "users": [row[0] for row in users],
                 "messages": [
-                    {
-                        "msgid": msg[0],
+                    {   "chatId": chatId,
+                        "messageId": msg[0],
                         "text": msg[1],
                         "typemsg": msg[2],
                         "load": msg[3],
