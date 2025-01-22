@@ -32,7 +32,7 @@ class getUserData(Command):
                     "userkey": "{tmp[4]}",
                     "usermail": "{tmp[5]}",
                     "isdeleted": "{tmp[6]}",
-                    "birthdate": "{tmp[7]}"
+                    "dateOfBirth": "{tmp[7]}"
             ''' + "}"
 
             print(customfeedback)
