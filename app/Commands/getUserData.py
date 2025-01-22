@@ -17,7 +17,7 @@ class getUserData(Command):
             userToGet = command_entity['userToGet']
             sql = f'select userid,username,nickname,phonenumber,userkey,useremail,isdeleted,birthdate from userinfo ' \
                   f'where userid = \'{userToGet}\';'
-
+#this version od time
             tmp = list(self.connection.read_data(sql)[0])
             print(tmp)
             for i in range((len(tmp))):

@@ -1,17 +1,9 @@
 import json
 from datetime import datetime
-
 from app.interfaces.command import Command
 from app.utils.DBReader import DBReader
 
-
 class getChatData(Command):
-    """
-    purpose: "getChatData"
-    username: String
-    chatId: String
-    """
-
     def __init__(self, body_json):
         self.body_json = body_json
         self.connection = DBReader()
@@ -24,7 +16,6 @@ class getChatData(Command):
             username = command_entity['username']
             chatId = command_entity['chatId']
 
-            # Получение информации о пользователях в чате
             sql_users = """
                 SELECT userid 
                 FROM chatandusers 
@@ -32,9 +23,8 @@ class getChatData(Command):
             """
             users = self.connection.read_data(sql_users, [chatId])
 
-            # Получение последних 50 сообщений из чата
             sql_messages = """
-                SELECT msgid, text,typemsg,load,fromUID,isdeleted,isRead, sendtime,isAnswer
+                SELECT msgid, text, typemsg, load, fromUID, isdeleted, isRead, sendtime, isAnswer
                 FROM messages 
                 WHERE chatid = %s 
                 ORDER BY sendtime DESC 
@@ -42,9 +32,8 @@ class getChatData(Command):
             """
             messages = self.connection.read_data(sql_messages, [chatId])
 
-            # Получение настроек чата
             sql_chat_settings = """
-                SELECT chatID, chatName,chatImage,chatSettings 
+                SELECT chatID, chatName, chatImage, chatSettings 
                 FROM chatinfo 
                 WHERE chatid = %s;
             """
@@ -58,10 +47,18 @@ class getChatData(Command):
                 "chatSettings": chat_settings[0][3],
                 "users": [row[0] for row in users],
                 "messages": [
-                    {"msgid": msg[0], "text": msg[1], "typemsg": msg[2], "load": msg[3], "isdeleted": msg[5],
-                     "isRead": msg[6],
-                     "isAnswer": msg[8], "sendTime": msg[7], "sender": msg[4]} for msg in
-                    messages]
+                    {
+                        "msgid": msg[0],
+                        "text": msg[1],
+                        "typemsg": msg[2],
+                        "load": msg[3],
+                        "isdeleted": msg[5],
+                        "isRead": msg[6],
+                        "isAnswer": msg[8],
+                        "sendTime": msg[7].strftime("%Y-%m-%d %H:%M:%S") if isinstance(msg[7], datetime) else msg[7],
+                        "sender": msg[4]
+                    } for msg in messages
+                ]
             }
             data = self.messages_
             json_data = json.dumps(data, default=self.custom_serializer, ensure_ascii=False, indent=4)
@@ -71,9 +68,9 @@ class getChatData(Command):
         except Exception as e:
             print(e)
 
-    def custom_serializer(self,obj):
+    def custom_serializer(self, obj):
         if isinstance(obj, datetime):
-            return obj.isoformat()  # Преобразуем datetime в строку формата ISO 8601
+            return obj.strftime("%Y-%m-%d %H:%M:%S")
         if obj is None:
-            return ""  # Заменяем None на пустую строку
+            return ""
         raise TypeError(f"Type {type(obj)} not serializable")
