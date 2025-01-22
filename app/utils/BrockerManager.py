@@ -1,3 +1,4 @@
+import json
 import os
 import threading
 
@@ -72,10 +73,34 @@ class BrockerM:
         self.consumerThread = threading.Thread(target=self.receive_messages)
         self.consumerThread.start()
 
-
+    def replace_null_with_empty(self,d):
+        if isinstance(d, dict):
+            for key, value in d.items():
+                d[key] = self.replace_null_with_empty(value)
+        elif isinstance(d, list):
+            for i in range(len(d)):
+                d[i] = self.replace_null_with_empty(d[i])
+        elif d is None:
+            return ""
+        return d
     def callback(self, ch, method, properties, body):
         print(f" [x] Received message: {body.decode()}")
         tmp = body.decode()
+
+        # Преобразуем строку JSON в словарь
+        try:
+            tmp_dict = json.loads(tmp)
+
+            # Рекурсивно заменяем все null значения на пустые строки
+
+
+            tmp_dict = self.replace_null_with_empty(tmp_dict)
+
+            # Преобразуем обратно в строку JSON
+            tmp = json.dumps(tmp_dict)
+
+        except json.JSONDecodeError:
+            print("Error decoding JSON message")
         tmp = self.factory.execute_command(tmp)
 
         if tmp:
