@@ -74,14 +74,11 @@ class BrockerM:
         self.consumerThread.start()
 
     def replace_null_with_empty(self,d):
-        if isinstance(d, dict):
-            for key, value in d.items():
-                d[key] = self.replace_null_with_empty(value)
-        elif isinstance(d, list):
-            for i in range(len(d)):
-                d[i] = self.replace_null_with_empty(d[i])
-        elif d is None:
-            return ""
+        if not isinstance(d, dict):
+            return d
+        for key, value in d.items():
+            if(value=="null" or value==None):
+                d[key]=""
         return d
     def callback(self, ch, method, properties, body):
         print(f" [x] Received message: {body.decode()}")
