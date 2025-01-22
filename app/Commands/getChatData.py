@@ -60,7 +60,7 @@ class getChatData(Command):
                 "messages": [
                     {"msgid": msg[0], "text": msg[1], "typemsg": msg[2], "load": msg[3], "isdeleted": msg[5],
                      "isRead": msg[6],
-                     "isAnswer": msg[8], "sendtime": msg[7], "sender": msg[4]} for msg in
+                     "isAnswer": msg[8], "sendTime": msg[7], "sender": msg[4]} for msg in
                     messages]
             }
             data = self.messages_
