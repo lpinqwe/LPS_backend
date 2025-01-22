@@ -28,7 +28,7 @@ class getUserData(Command):
                     "consumers":["{user}"],
                     "username": "{tmp[0]}",
                     "nickname": "{tmp[2]}",
-                    "phonenumber": "{tmp[3]}",
+                    "phoneNumber": "{tmp[3]}",
                     "userkey": "{tmp[4]}",
                     "usermail": "{tmp[5]}",
                     "isdeleted": "{tmp[6]}",
