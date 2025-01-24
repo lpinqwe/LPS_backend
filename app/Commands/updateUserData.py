@@ -4,6 +4,7 @@
 import json
 from datetime import datetime
 from app.interfaces.command import Command
+from app.interfaces.feedback import Feedback
 from app.utils.DBReader import DBReader
 
 
@@ -60,7 +61,7 @@ class updateUserData(Command):
                 "dateOfBirth": dateOfBirth
             }
 
-            return json.dumps(data)
+            return Feedback.from_map(data)
 
         except Exception as e:
             print(e)

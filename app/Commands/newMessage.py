@@ -1,6 +1,7 @@
 import json
 
 from app.interfaces.command import Command
+from app.interfaces.feedback import Feedback
 from app.utils.DBReader import DBReader
 
 
@@ -22,7 +23,7 @@ class newMessage(Command):
         self.body_json = body_json
         self.connection = DBReader()
 
-    def execute(self):
+    def execute(self)->Feedback:
         try:
             print("NewMessage func")
             command_entity = json.loads(self.body_json)
@@ -69,6 +70,6 @@ class newMessage(Command):
                 "isRead": isRead,
                 "sendTime": sendTime
             }
-            return json.dumps(data)
+            return Feedback.from_map(data)
         except Exception as e:
             print(e)

@@ -2,6 +2,7 @@
 
 import json
 from app.interfaces.command import Command
+from app.interfaces.feedback import Feedback
 from app.utils.DBReader import DBReader
 
 class getListOfChats(Command):
@@ -14,7 +15,7 @@ class getListOfChats(Command):
         self.body_json = body_json
         self.connection = DBReader()
 
-    def execute(self):
+    def execute(self)->Feedback:
         try:
             print("getListOfChats func")
             command_entity = json.loads(self.body_json)
@@ -36,7 +37,7 @@ class getListOfChats(Command):
                 "chats": [f"{chat[0]}" for chat in chats]  # Получение только ID чатов
             }
 
-            return json.dumps(customFeedback)
+            return Feedback.from_map(customFeedback)
 
         except Exception as e:
             print(e)

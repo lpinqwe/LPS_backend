@@ -2,6 +2,11 @@ import json
 
 
 class Feedback:
+
+
+    @classmethod
+    def from_map(self,json_map):
+        return json.dumps(json_map)
     def __init__(self, purpose="info", username="sysMsg", payload="testMsg", consum=''):
 
         self.purpose = purpose
